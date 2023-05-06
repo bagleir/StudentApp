@@ -4,6 +4,7 @@ public class Student {
     private String date_of_birth;
     private String name;
     private String email;
+    private ListGrades grades;
 
     public int GetID(){
         return this.ID;
@@ -19,6 +20,18 @@ public class Student {
 
     public String GetEmail(){
         return this.email;
+    }
+
+    public void GetGrade(int i){
+        this.grades.GetGrade(i);
+    }
+
+    public void AddGrade(StudentGrades<Double> grade){
+        grades.AddGrade(grade);
+    }
+
+    public void RemoveGrade(StudentGrades<Double> grade){
+        grades.RemoveGrade(grade);
     }
 
     public Student(int ID, String name, String date_of_birth, String email){

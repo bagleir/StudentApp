@@ -11,7 +11,11 @@ public class ListGrades {
         this.gradelist.add(grade);
     }
 
-    public StudentGrades<Double>GetGrade(int i){
+    public void RemoveGrade(StudentGrades<Double> grade){
+        this.gradelist.remove(grade);
+    }
+
+    public StudentGrades<Double> GetGrade(int i){
         return gradelist.get(i);
     }
 }
