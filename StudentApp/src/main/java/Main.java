@@ -7,9 +7,14 @@ public class Main {
 
         System.out.printf("Hello and welcome!");
         Student gerard = new Student(10,"Jean","13/08/1999","toto@gmail.com");
+        String filename = App.Createfile(gerard);
+        for(Double i =0.0; i<10.0;i += 1.0){
+            StudentGrades sg= new StudentGrades(i);
+            gerard.AddGrade(sg);
+        }
         try {
         // Method call that throws IOException
-            App.Builtin("test.txt",gerard);
+            App.Builtin(filename,gerard);
         } catch (IOException e) {
         // Exception handling code
             e.printStackTrace();

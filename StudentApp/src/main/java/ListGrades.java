@@ -15,6 +15,14 @@ public class ListGrades {
         this.gradelist.remove(grade);
     }
 
+    public int NumberGrade(){
+        return this.gradelist.size();
+    }
+
+    public StudentGrades<Double> GetI(int i){
+        return this.gradelist.get(i);
+    }
+
     public StudentGrades<Double> GetGrade(int i){
         return gradelist.get(i);
     }

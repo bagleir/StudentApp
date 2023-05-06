@@ -27,11 +27,19 @@ public class Student {
     }
 
     public void AddGrade(StudentGrades<Double> grade){
-        grades.AddGrade(grade);
+        this.grades.AddGrade(grade);
     }
 
     public void RemoveGrade(StudentGrades<Double> grade){
-        grades.RemoveGrade(grade);
+        this.grades.RemoveGrade(grade);
+    }
+
+    public int NumberGrade(){
+        return grades.NumberGrade();
+    }
+
+    public StudentGrades<Double> GetI(int i){
+        return grades.GetI(i);
     }
 
     public Student(int ID, String name, String date_of_birth, String email){
@@ -39,5 +47,6 @@ public class Student {
         this.date_of_birth = date_of_birth;
         this.email = email;
         this.name = name;
+        this.grades = new ListGrades();
     }
 }
