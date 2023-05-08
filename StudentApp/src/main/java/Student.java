@@ -1,52 +1,66 @@
+import javafx.beans.property.*;
+
 public class Student {
 
-    private int ID;
-    private String date_of_birth;
-    private String name;
-    private String email;
-    private ListGrades grades;
+    private final IntegerProperty ID;
+    private final StringProperty date_of_birth;
+    private final StringProperty name;
+    private final StringProperty email;
+    private final ListGrades grades;
 
-    public int GetID(){
-        return this.ID;
+    public Student(int ID, String name, String date_of_birth, String email) {
+        this.ID = new SimpleIntegerProperty(ID);
+        this.date_of_birth = new SimpleStringProperty(date_of_birth);
+        this.name = new SimpleStringProperty(name);
+        this.email = new SimpleStringProperty(email);
+        this.grades = new ListGrades();
     }
 
-    public String GetDate(){
-        return this.date_of_birth;
+    public int GetID() {
+        return ID.get();
     }
 
-    public String GetName(){
-        return this.name;
+    public IntegerProperty IDProperty() {
+        return ID;
     }
 
-    public String GetEmail(){
-        return this.email;
+    public String GetDate() {
+        return date_of_birth.get();
     }
 
-    public void GetGrade(int i){
-        this.grades.GetGrade(i);
+    public StringProperty date_of_birthProperty() {
+        return date_of_birth;
     }
 
-    public void AddGrade(StudentGrades<Double> grade){
-        this.grades.AddGrade(grade);
+    public String GetName() {
+        return name.get();
     }
 
-    public void RemoveGrade(StudentGrades<Double> grade){
-        this.grades.RemoveGrade(grade);
+    public StringProperty nameProperty() {
+        return name;
     }
 
-    public int NumberGrade(){
+    public String GetEmail() {
+        return email.get();
+    }
+
+    public StringProperty emailProperty() {
+        return email;
+    }
+
+    public void AddGrade(StudentGrades<Double> grade) {
+        grades.AddGrade(grade);
+    }
+
+    public void RemoveGrade(StudentGrades<Double> grade) {
+        grades.RemoveGrade(grade);
+    }
+
+    public int NumberGrade() {
         return grades.NumberGrade();
     }
 
-    public StudentGrades<Double> GetI(int i){
+    public StudentGrades<Double> GetI(int i) {
         return grades.GetI(i);
-    }
-
-    public Student(int ID, String name, String date_of_birth, String email){
-        this.ID = ID;
-        this.date_of_birth = date_of_birth;
-        this.email = email;
-        this.name = name;
-        this.grades = new ListGrades();
     }
 }

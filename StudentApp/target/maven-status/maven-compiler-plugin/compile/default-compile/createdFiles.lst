@@ -1,5 +1,9 @@
-App.class
 Main.class
+MaximizedWindow.class
 StudentGrades.class
 ListGrades.class
+SecondaryWindow.class
+App.class
 Student.class
+AddStudent.class
+MaximizedWindow$1.class
