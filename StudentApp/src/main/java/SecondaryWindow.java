@@ -5,7 +5,10 @@ import javafx.geometry.Pos;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import org.apache.commons.io.FileUtils;
 import java.io.File;
+import java.io.IOException;
+
 
 public class SecondaryWindow {
 
@@ -13,29 +16,53 @@ public class SecondaryWindow {
         Stage stage = new Stage();
         stage.setTitle("File interaction");
 
-        Button actionButton = new Button("Add a Student with grades");
+        Button actionButton1 = new Button("Add a Student with grades");
+        Button actionButton2 = new Button("Add a lot of Student");
+        Button actionButton3 = new Button("Generate a rapport for all Student");
         Button closeButton = new Button("Close");
 
-        actionButton.setOnAction(event -> {
+        actionButton1.setOnAction(event -> {
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Select a File");
 
             File selectedFile = fileChooser.showOpenDialog(stage);
             if (selectedFile != null) {
                 System.out.println("Selected File: " + selectedFile.getAbsolutePath());
+                try {
+                    App.ReadFileStudent(selectedFile.getAbsolutePath());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
-        // Define the action for the close button
+        actionButton2.setOnAction(event -> {
+            FileChooser fileChooser2 = new FileChooser();
+            fileChooser2.setTitle("Select a File");
+
+            File selectedFile2 = fileChooser2.showOpenDialog(stage);
+            if (selectedFile2 != null) {
+                System.out.println("Selected File: " + selectedFile2.getAbsolutePath());
+                try {
+                    App.ReadStudentsAdd(selectedFile2.getAbsolutePath());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        actionButton3.setOnAction(event -> {
+            App.generateStudentInfoFile();
+        });
+
         closeButton.setOnAction(event -> stage.close());
 
         VBox vbox = new VBox(10);
         vbox.setAlignment(Pos.CENTER);
-        vbox.getChildren().addAll(actionButton, closeButton);
+        vbox.getChildren().addAll(actionButton1,actionButton2,actionButton3, closeButton);
 
         Scene scene = new Scene(vbox, 200, 200);
         stage.setScene(scene);
-        stage.setMaximized(true);
 
         stage.show();
     }

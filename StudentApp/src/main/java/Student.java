@@ -20,6 +20,10 @@ public class Student {
         return ID.get();
     }
 
+    public ListGrades GetGrades() {
+        return grades;
+    }
+
     public IntegerProperty IDProperty() {
         return ID;
     }
