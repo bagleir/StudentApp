@@ -4,18 +4,22 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.geometry.Pos;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.scene.layout.VBox;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.stage.Stage;
+import javafx.scene.layout.Region;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,32 +58,33 @@ public class MaximizedWindow extends Application {
 
         studentData = FXCollections.observableArrayList();
         
-        Button button1 = new Button("ADD STUDENT");
-        Button button2 = new Button("FILE MANAGING");
-        Button button4 = new Button("Update table");
+        Button button1 = new Button("Add a Student");
+        Button button2 = new Button("File Managing");
+        Button button4 = new Button("Update the Table");
         Button buttonclose = new Button("Close");
+        buttonclose.setStyle("-fx-font-size: 14px; -fx-min-width: 80px; -fx-min-height: 36px;");
 
         Button buttonN = new Button("By Name");
         Button buttonI = new Button("By ID");
-        Button buttonD = new Button("By Date");
-        Button buttonE = new Button("By email");
+        Button buttonD = new Button("By Date of Birth");
+        Button buttonE = new Button("By Email");
 
         button2.setOnAction(event -> {
-            LOGGER.log(Level.INFO, "Secondary window opened"); // Log the event
-            SecondaryWindow.show(); // Call the show() method of SecondaryWindow class
+            LOGGER.log(Level.INFO, "Secondary window opened"); 
+            SecondaryWindow.show(); 
         });
 
         button4.setOnAction(event -> {
-            LOGGER.log(Level.INFO, "Table update"); // Log the event
+            LOGGER.log(Level.INFO, "Table update"); 
             for(int i =0;i<App.allStudent.size();i++){
-                addStudentToTableIfNotExists(App.allStudent.get(i));
+                addStudentToTable(App.allStudent.get(i));
             }
             resetFilter();
         });
 
         button1.setOnAction(event -> {
-            LOGGER.log(Level.INFO, "Add Student opened"); // Log the event
-            AddStudent.show(); // Call the show() method of SecondaryWindow class
+            LOGGER.log(Level.INFO, "Add Student opened");
+            AddStudent.show();
         });
 
         buttonN.setOnAction(event -> {
@@ -109,6 +114,10 @@ public class MaximizedWindow extends Application {
 
         TextField searchTextField = new TextField();
         searchTextField.setPromptText("Search");
+        searchTextField.setPrefWidth(150);
+
+        searchTextField.setStyle("-fx-pref-height: 40px;");
+
         Button searchButton = new Button("Search");
         
         searchButton.setOnAction(event -> {
@@ -130,6 +139,7 @@ public class MaximizedWindow extends Application {
 
 
         tableView = new TableView<>();
+        tableView.setPrefHeight(700); 
         TableColumn<Student, Integer> idColumn = new TableColumn<>("ID");
         TableColumn<Student, String> nameColumn = new TableColumn<>("Name");
         TableColumn<Student, String> dobColumn = new TableColumn<>("Date of Birth");
@@ -140,6 +150,7 @@ public class MaximizedWindow extends Application {
         dobColumn.setCellValueFactory(new PropertyValueFactory<>("date_of_birth"));
         emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
 
+
         idColumn.prefWidthProperty().set(100);
         nameColumn.prefWidthProperty().set(300);
         dobColumn.prefWidthProperty().set(200);
@@ -147,18 +158,66 @@ public class MaximizedWindow extends Application {
 
         tableView.getColumns().addAll(idColumn, nameColumn, dobColumn, emailColumn);
         addRowButton();
+        addRowButton2();
         studentData = FXCollections.observableArrayList();
         tableView.setItems(studentData);
 
         Student Jaen = new Student(1, "John", "1990-01-01", "john@example.com");
         App.allStudent.add(Jaen);
+        for(int i =0;i<App.allStudent.size();i++){
+            addStudentToTable(App.allStudent.get(i));
+        }
+        resetFilter();
+
+        HBox.setHgrow(searchTextField, Priority.ALWAYS);
+        HBox.setMargin(searchButton, new Insets(0, 0, 0, 10));
+
+
+        HBox searchBox = new HBox(10, searchTextField, searchButton);
+        searchBox.setAlignment(Pos.CENTER_LEFT);
+
+
+        BorderPane root = new BorderPane();
+        root.setPadding(new Insets(10));
+        root.setTop(searchBox);
+        BorderPane.setAlignment(searchBox, Pos.TOP_LEFT);
+        BorderPane.setMargin(searchBox, new Insets(10, 0, 10, 0));
+        root.setCenter(tableView);
+        BorderPane.setMargin(tableView, new Insets(0, 0, 10, 0));
+        root.setBottom(buttonclose);
+
+        Region spacer = new Region();
+        VBox.setVgrow(spacer, Priority.ALWAYS);
+        spacer.setMaxHeight(100);
+        spacer.setMaxWidth(100);
         
+        HBox buttonBox = new HBox(10);
+        buttonBox.getChildren().addAll(buttonN, buttonE, buttonI, buttonD);
+        buttonBox.setAlignment(Pos.CENTER);
+        root.setRight(buttonBox);
 
-        VBox vbox = new VBox(10);
-        vbox.setAlignment(Pos.CENTER);
-        vbox.getChildren().addAll(searchTextField, searchButton,button1, buttonN,buttonI,buttonD,buttonE,button2,button4, tableView,buttonclose);
+        Region spacer2 = new Region();
+        VBox.setVgrow(spacer2, Priority.ALWAYS);
+        spacer2.setMaxHeight(40);
+        spacer2.setMaxWidth(40);
 
-        Scene scene = new Scene(vbox, 400, 300);
+        HBox buttonsBox2 = new HBox(10);
+        buttonsBox2.getChildren().addAll(button1,button2,button4);
+        buttonsBox2.setAlignment(Pos.CENTER);
+        buttonsBox2.setPadding(new Insets(10));
+        root.setRight(buttonsBox2);
+
+        HBox closeBox = new HBox(10);
+        closeBox.getChildren().addAll(buttonclose);
+        closeBox.setAlignment(Pos.CENTER);
+        closeBox.setPadding(new Insets(10));
+        root.setRight(closeBox);
+
+        VBox rootBox = new VBox();
+        rootBox.getChildren().addAll(spacer,searchBox,buttonBox,spacer2,buttonsBox2, tableView, closeBox);
+
+
+        Scene scene = new Scene(rootBox, 800, 600);
         primaryStage.setScene(scene);
         primaryStage.setMaximized(true);
 
@@ -172,8 +231,7 @@ public class MaximizedWindow extends Application {
         startCommandLineInterface();
     }
 
-    private void addStudentToTableIfNotExists(Student st) {
-        // Check if student with the same ID already exists in the table
+    private void addStudentToTable(Student st) {
         boolean studentExists = false;
         for (Student student : studentData) {
             if (student.GetID() == st.GetID()) {
@@ -182,7 +240,6 @@ public class MaximizedWindow extends Application {
             }
         }
         if (!studentExists) {
-            // Student does not exist, add to the table
             studentData.add(st);
         }
     }
@@ -212,6 +269,36 @@ public class MaximizedWindow extends Application {
         });
         tableView.getColumns().add(actionColumn);
     }
+
+
+    private void addRowButton2() {
+        TableColumn<Student, Void> actionColumn = new TableColumn<>("Remove");
+        actionColumn.setCellFactory(param -> new TableCell<Student, Void>() {
+            private final Button button = new Button("Remove");
+            {
+                button.setOnAction(event -> {
+                    Student student = getTableRow().getItem();
+                    if (student != null) {
+                        studentData.remove(student);
+                        tableView.getItems().remove(student);
+                        App.allStudent.remove(student);
+                    }
+                });
+            }
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(button);
+                }
+            }
+        });
+        tableView.getColumns().add(actionColumn);
+    }
+
 
     private void openNewPage(Student student) {
         Stage newStage = new Stage();
@@ -273,9 +360,6 @@ public class MaximizedWindow extends Application {
     }
     
     private boolean isValidGrade(String input) {
-        // Verify that the input is a valid grade (0-100)
-        // You can customize the validation logic based on your requirements
-        // Here, we use a regular expression pattern to match a number between 0 and 100
         String gradePattern = "\\d{1,2}([.]\\d)?|100([.]0)?";
         return Pattern.matches(gradePattern, input);
     }
@@ -289,8 +373,41 @@ public class MaximizedWindow extends Application {
                 if (command.equalsIgnoreCase("exit")) {
                     Platform.exit();
                     System.exit(0);
+                }else if (startsWithIgnoreCase(command,"add grade")){
+                    String[] parts = command.split(" ");
+                    if (parts.length == 4) {
+                        int studentID = Integer.parseInt(parts[2]);
+                        Student st = filterStudentByIDInteger(studentID);
+                        if (isValidGrade(parts[3])) {
+                            double gradeValue = Double.parseDouble(parts[3]);
+                            StudentGrades<Double> newGrade = new StudentGrades<>(gradeValue);
+                            st.AddGrade(newGrade);
+                        } else {
+                            LOGGER.log(Level.INFO, "Invalid Grade : Please enter a valid grade (0.0-100.0).");
+                        }
+                    } else {
+                        LOGGER.log(Level.INFO, "Invalid command. Please use the format: add grade <studentID> <grade>");
+                    }
+                }else if (startsWithIgnoreCase(command,"add student")){
+                    String[] parts = command.split(" ");
+                    if (parts.length == 6) {
+                        if(AddStudent.Is_Valid(parts[3],parts[2],parts[5],parts[4])){
+                            LOGGER.log(Level.INFO, "New Student Saved");
+                            int id = Integer.parseInt(parts[2]);
+                            if(id == 0){
+                                id = AddStudent.Pick_ID();
+                            }
+                            Student student = new Student(id,parts[3],parts[4],parts[5]);
+                            App.allStudent.add(student);
+                        }
+                        else{
+                            LOGGER.log(Level.INFO, "Invalid student, please try again");
+                        }
+                    } else {
+                        LOGGER.log(Level.INFO, "Invalid command. Please use the format: add student <studentID> <studentName> <studentDate> <studentEmail>");
+                    }
                 } else {
-                    System.out.println("Command not recognized. Please try again.");
+                    LOGGER.log(Level.INFO, "Command not recognized. Please try again.");
                 }
             }
         }).start();
@@ -330,4 +447,30 @@ public class MaximizedWindow extends Application {
     private void resetFilter() {
         tableView.setItems(studentData);
     }
+
+    private Student filterStudentByIDInteger(int studentID) {
+        List<Student> filteredStudents = studentData.stream()
+                .filter(student -> student.GetID() == studentID)
+                .collect(Collectors.toList());
+
+        long count = filteredStudents.size();
+        if (count > 1) {
+            LOGGER.log(Level.INFO, "Multiple students found with the same ID.");
+            return null; 
+        } else if (count == 0) {
+            LOGGER.log(Level.INFO, "No student found with the given ID.");
+            return null; 
+        }
+
+        return filteredStudents.get(0); 
+    }
+
+    private boolean startsWithIgnoreCase(String str, String prefix) {
+        if (str.length() < prefix.length()) {
+            return false;
+        }
+        return str.regionMatches(true, 0, prefix, 0, prefix.length());
+    }
+
+
 }

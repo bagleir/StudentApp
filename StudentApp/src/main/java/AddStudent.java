@@ -36,16 +36,15 @@ public class AddStudent {
                 stage.close();
             }
             else{
-                LOGGER.log(Level.INFO, "Invalid Student, please try again");
+                LOGGER.log(Level.INFO, "Invalid student, please try again");
             }
         });
 
-        // Define the action for the close button
         closeButton.setOnAction(event -> stage.close());
 
         VBox vbox = new VBox(10);
         vbox.setAlignment(Pos.CENTER);
-        vbox.getChildren().addAll(actionButton, closeButton,textFieldN,textFieldI,textFieldD,textFieldE);
+        vbox.getChildren().addAll(actionButton,textFieldN,textFieldI,textFieldD,textFieldE,closeButton);
 
         Scene scene = new Scene(vbox, 200, 200);
         stage.setScene(scene);

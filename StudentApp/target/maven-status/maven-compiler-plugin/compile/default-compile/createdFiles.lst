@@ -3,6 +3,7 @@ MaximizedWindow.class
 StudentGrades.class
 ListGrades.class
 SecondaryWindow.class
+MaximizedWindow$2.class
 App.class
 Student.class
 AddStudent.class

@@ -13,7 +13,7 @@ public class App {
     public static ArrayList<Student> allStudent = new ArrayList<>();
 
     public static String Createfile(Student student){
-        String filename = "Builtin"+student.GetName().replaceAll(" ", "_") + ".txt";
+        String filename = "file/Builtin"+student.GetName().replaceAll(" ", "_") + ".txt";
         return filename;
     }
 
@@ -23,7 +23,7 @@ public class App {
         s = s + Integer.valueOf(student.GetID()) + ", " + student.GetName() + ", " + student.GetEmail() + ", " + student.GetDate();
         s = s+ "\n";
         for(int i = 0;i<student.NumberGrade();i++){
-            s = s + "Grade "+ i + " : " + student.GetI(i).GetGrade() + "\n";
+            s = s + "Grade "+ i+1 + " : " + student.GetI(i).GetGrade() + "\n";
         }
         FileUtils.writeStringToFile(file,s,StandardCharsets.UTF_8);
     }
@@ -102,12 +102,12 @@ public class App {
                 name = name + fileContent.charAt(i);
                 i = i+1;
             }
-            i = i+2;
+            i = i+1;
             while(i < fileContent.length() && fileContent.charAt(i) != ' '){
                 date = date + fileContent.charAt(i);
                 i = i+1;
             }
-            i = i+2;
+            i = i+1;
             if(i >= fileContent.length()){
                 throw new IOException("Invalide File");
             }
@@ -132,13 +132,13 @@ public class App {
     }
 
     public static void generateStudentInfoFile() {
-        try (PrintWriter writer = new PrintWriter(new FileWriter("student_info.txt"))) {
+        try (PrintWriter writer = new PrintWriter(new FileWriter("file/student_info.txt"))) {
             for (Student student : allStudent) {
                 writer.println("Student's ID : " + student.GetID());
                 writer.println("Name : " + student.GetName());
                 writer.println("Date : " + student.GetDate());
                 writer.println("Email : " + student.GetEmail());
-                writer.println(); // Add an empty line between each student's information
+                writer.println();
             }
         } catch (IOException e) {
             e.printStackTrace();
