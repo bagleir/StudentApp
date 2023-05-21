@@ -1,0 +1,34 @@
+Resoudre probleme methode import
+Nouveau fichier avec les functions principales :
+ - Recherche (Lambda.filter())
+ - Creer bultin (ecrire et creer fichier/apache)
+ - Global report (ecrire et creer fichier/apache)
+ - Calcul moyenne
+ - read file
+ -
+ 
+Nouvelle methode eleve :
+ - Add note
+ - remove note
+ - Calculer moyenne
+ 
+Interphace graphique Java FX + (Command line ?)
+Exeption
+LOGGER ?
+Maven library
+test maven
+Generics manage (?)
+Rapport
+Documentation
+
+
+
+Plan :
+
+I :    
+II :   5/7
+III :  3/16
+IV :   17/18
+V :    15
+VI :   19
+VII :  21/22

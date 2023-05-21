@@ -14,6 +14,7 @@ import java.util.ArrayList;
 public class Main{
     
     public static void main(String[] args){
+        // Launch the application by calling the launch() method of MaximizedWindow class
         MaximizedWindow.launch(MaximizedWindow.class, args);
     }
 }
